@@ -22,6 +22,19 @@
   color: #61dafb;
 }
 
+.news-header {
+  margin-top: 0px;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.avatar-placeholder {
+  border-radius: 50%;
+  height: 72px;
+  margin-right: 20px;
+  width: 72px;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
