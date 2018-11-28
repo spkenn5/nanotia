@@ -1,83 +1,52 @@
+import _ from 'lodash';
 import React, {Fragment, Component} from 'react';
 import MainPageNewsContainer from '../components/MainPageNewsContainer';
 import axios from 'axios';
+import { connect } from 'react-redux';
+import { fetchPosts } from '../actions';
 
-export default class HomePage extends Component {
+class HomePage extends Component {
     constructor(props) {
         super(props);
-
         this.state = {
-            hasMore: true,
-            error: false,
-            loading: false,
-            totalPage: 0,
             currentPage: 0,
-            data: [],
+            error: false,
+            loading: false, 
+            totalPage: 999999
         };
 
         window.onscroll = () => {
-            const {
-                loadUsers,
-                state: {
-                    error,
-                    loading,
-                    currentPage,
-                    totalPage
-                },
-            } = this;
-
+            const { error, loading, currentPage, totalPage } = this.props.posts;            
             if (error || loading || currentPage === totalPage) {
                 return;
             }
 
-            if (window.innerHeight + document.documentElement.scrollTop === document.documentElement.offsetHeight) {
-                loadUsers(currentPage);
+            if (window.innerHeight + document.documentElement.scrollTop === document.documentElement.offsetHeight) {                                             
+                props.fetchPosts(currentPage+1, 5);
             }
         };
     }
 
-    loadUsers = (currentPage) => {
-        this.setState({
-            loading: true
-        }, () => {
-            axios.get(`https://www.techinasia.com/wp-json/techinasia/2.0/posts?page=${currentPage+1}&per_page=10`)
-                .then((results) => {
-                    const {data} = results;
-                    if (data) {
-                        const {total_pages, current_page, posts} = data;
-                        this.setState({
-                            data: [
-                                ...this.state.data,
-                                ...posts
-                            ],
-                            totalPage: total_pages,
-                            currentPage: current_page,
-                            hasMore: current_page < total_pages
-                        });
-                    }
-                })
-                .catch((err) => {
-                    console.log('DEBUG err', err);
-                })
-                .then(() => {
-                    this.setState({loading: false});
-                })
+    renderPosts() {
+        return _.map(this.props.posts.data, post => {            
+            return (<MainPageNewsContainer data={post}/>)
         });
     }
 
     componentWillMount() {
-        this.loadUsers(this.state.currentPage);
+        this.props.fetchPosts(this.state.currentPage+1, 5);        
     }
 
     render() {
-        const {data, error, loading, hasMore} = this.state;
+        const { posts } = this.props;
+        const {data, error, loading, hasMore} = posts;
         return (
             <div>
                 <div className="jumbotron text-center">
-                    <h1>My Nano TIA Page</h1>
+                    <h1 onClick={() => {console.log('DEBUG clicked')}}>My Nano TIA Page</h1>
                     <p>Please scroll to the infinity and beyond!</p>
                 </div>
-                {data.map(item => (<MainPageNewsContainer data={item}/>))}
+                {this.renderPosts()}
                 <hr/>
                 {error && <div style={{color: '#900'}}>{error}</div>}
                 {loading && <div>Loading...</div>}
@@ -86,3 +55,9 @@ export default class HomePage extends Component {
         );
     }
 }
+
+function mapStateToProps(state) {
+    return { posts: state.posts };
+}
+
+export default connect(mapStateToProps, {fetchPosts})(HomePage);

@@ -34,6 +34,32 @@
   margin: 10px;
 }
 
+.news-page-news-container {
+  display: contents;
+  position: relative;
+  margin: 10px;
+}
+
+.news-page-news-container-detail-author {  
+  margin: 10px;
+  font-size: 12px;
+}
+
+.news-page-news-container-detail {
+  height: 980px;
+  margin: 10px;
+}
+
+.news-page-news-content {  
+  max-width: 100%;
+}
+
+.size-full {
+  height: 100%; 
+  width: 100%; 
+  display:block
+}
+
 .main-page-news-container-img {
   width: 250px;
   height: 170px;
