@@ -1,15 +1,46 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { fetchPost } from '../actions';
 
-export default class NewsPage extends Component {
+class NewsPage extends Component {
 		constructor(props) {
 			super(props);
 			const { articleSlug } = props.match.params
 			console.log('DEBUG -> ', articleSlug);
 		}
-		
-    render() {
-        return (
-            <p></p>
-        );
+
+		componentDidMount() {
+	    const { id } = this.props.match.params;
+	    this.props.fetchPost(id);
+	  }
+
+  render() {
+    const { post } = this.props;   
+
+    if(!post){
+      return <div>Loading...</div>;
     }
+
+    return (
+      <div>
+        <Link to="/">Back To Index</Link>
+        <button
+          className="btn btn-danger pull-xs-right"
+          onClick={this.onDeleteClick.bind(this)}
+        >
+          Delete Post
+        </button>
+        <h3>{post.title}</h3>
+        <h6>Categories: {post.categories}</h6>
+        <p>{post.content}</p>
+      </div>
+    );
+  }
 }
+
+function mapStateToProps({ posts }, ownProps) {
+  return { post: posts[ownProps.match.params.id] };
+}
+
+export default connect(mapStateToProps, { fetchPost })(NewsPage);
