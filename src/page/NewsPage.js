@@ -4,39 +4,32 @@ import { Link } from 'react-router-dom';
 import { fetchPost } from '../actions';
 
 class NewsPage extends Component {
-		constructor(props) {
-			super(props);
-			const { articleSlug } = props.match.params
-			console.log('DEBUG -> ', articleSlug);
-		}
+    constructor(props) {
+        super(props);
 
-		componentDidMount() {
-	    const { id } = this.props.match.params;
-	    this.props.fetchPost(id);
-	  }
-
-  render() {
-    const { post } = this.props;   
-
-    if(!post){
-      return <div>Loading...</div>;
+        this.state = {
+            articleSlug: props.match.params
+        };
     }
 
-    return (
-      <div>
-        <Link to="/">Back To Index</Link>
-        <button
-          className="btn btn-danger pull-xs-right"
-          onClick={this.onDeleteClick.bind(this)}
-        >
-          Delete Post
-        </button>
-        <h3>{post.title}</h3>
-        <h6>Categories: {post.categories}</h6>
-        <p>{post.content}</p>
-      </div>
-    );
-  }
+    componentDidMount() {
+        const { articleSlug } = this.state;
+        this.props.fetchPost(articleSlug);
+    }
+
+    render() {
+        const { post } = this.props;
+
+        if(!post){
+            return <div>Loading...</div>;
+        }
+
+        return (
+            <div>
+
+            </div>
+        );
+    }
 }
 
 function mapStateToProps({ posts }, ownProps) {

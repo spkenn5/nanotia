@@ -1,6 +1,5 @@
 import React, {Fragment, Component} from 'react';
 import MainPageNewsContainer from '../components/MainPageNewsContainer';
-import {render} from "react-dom";
 import axios from 'axios';
 
 export default class HomePage extends Component {
