@@ -1,10 +1,10 @@
-import React, { Fragment, Component } from 'react';
+import React, {Fragment, Component} from 'react';
 import MainPageNewsContainer from '../components/MainPageNewsContainer';
-import { render } from "react-dom";
+import {render} from "react-dom";
 import axios from 'axios';
 
 export default class HomePage extends Component {
-    constructor(props){
+    constructor(props) {
         super(props);
 
         this.state = {
@@ -36,67 +36,45 @@ export default class HomePage extends Component {
     }
 
     loadUsers = () => {
-        this.setState({ 
-            loading: true 
+        this.setState({
+            loading: true
         }, () => {
-        axios.get('https://www.techinasia.com/wp-json/techinasia/2.0/posts')
-            .then((results) => {
-                const { data } = results;
-                if(data){
-                    const { total_pages, current_page, posts } = data;
-                    console.log('DEBUG posts ', results, total_pages, current_page, posts);
-                    this.setState({
-                        data: posts,
-                        totalPage: total_pages,
-                        currentPage: current_page
-                    });
-                }                
-            })
-            .catch((err) => {
-                console.log('DEBUG err', err);
-            })
-            .then(() => {
-                this.setState({loading: false});
-            })
+            axios.get('https://www.techinasia.com/wp-json/techinasia/2.0/posts')
+                .then((results) => {
+                    const {data} = results;
+                    if (data) {
+                        const {total_pages, current_page, posts} = data;
+                        this.setState({
+                            data: posts,
+                            totalPage: total_pages,
+                            currentPage: current_page
+                        });
+                    }
+                })
+                .catch((err) => {
+                    console.log('DEBUG err', err);
+                })
+                .then(() => {
+                    this.setState({loading: false});
+                })
         });
     }
 
-    componentWillMount() {    
+    componentWillMount() {
         this.loadUsers();
     }
 
     render() {
-        const { data, error, loading, hasMore } = this.state;
-        console.log('DEBUG data ', data);
+        const {data, error, loading, hasMore} = this.state;
         return (
             <div>
-                <div className="jumbotron text-center">
-                    <h1>My First Bootstrap Page</h1>
-                    <p>Resize this responsive page to see the effect!</p>
-                </div>
-                <div className = "container" >
-                    <div>
-                    <h1>Infinite Posts!</h1>
-                        <p>Scroll down to load more!!</p>
-                        {
-                            data.map(item => 
-                            (<MainPageNewsContainer data={item} />)
-                            )
-                        }
-                        <hr />
-                        {error &&
-                          <div style={{ color: '#900' }}>
-                            {error}
-                          </div>
-                        }
-                        {loading &&
-                          <div>Loading...</div>
-                        }
-                        {!hasMore &&
-                          <div>You did it! You reached the end!</div>
-                        }
-                  </div>
-                </div>
+                <h1>Infinite Posts!</h1>
+                <p>Scroll down to load more!!</p>
+                {data.map(item => (<MainPageNewsContainer data={item}/>))}
+                <hr/>
+                {error && <div style={{color: '#900'}}>{error}</div>}
+                {loading && <div>Loading...</div>}
+                {!hasMore && <div>You did it! You reached the end!</div>}
             </div>
         );
     }
@@ -104,4 +82,4 @@ export default class HomePage extends Component {
 
 const container = document.createElement("div");
 document.body.appendChild(container);
-render(<HomePage />, container);
+render(<HomePage/>, container);

@@ -28,6 +28,30 @@
   font-size: 16px;
 }
 
+.main-page-news-container {
+  display: flex;
+  position: relative;
+  margin: 10px;
+}
+
+.main-page-news-container-img {
+  width: 250px;
+  height: 170px;
+  margin: 10px;
+}
+
+.main-page-news-container-detail {
+  height: 170px;
+  margin: 10px;
+}
+
+.main-page-news-container-detail-author {
+  position:absolute;
+  bottom:0;
+  right:0;
+  margin: 10px;
+}
+
 .avatar-placeholder {
   border-radius: 50%;
   height: 72px;
