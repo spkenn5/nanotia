@@ -8,11 +8,11 @@ export default class HomePage extends Component {
         super(props);
 
         this.state = {
-            error: false,
             hasMore: true,
+            error: false,
             loading: false,
             totalPage: 0,
-            currentPage: 1,
+            currentPage: 0,
             data: [],
         };
 
@@ -22,32 +22,38 @@ export default class HomePage extends Component {
                 state: {
                     error,
                     loading,
-                    hasMore,
+                    currentPage,
+                    totalPage
                 },
             } = this;
 
-            if (this.state.error || this.state.isLoading || !this.state.hasMore) return;
+            if (error || loading || currentPage === totalPage) {
+                return;
+            }
 
-            // Checks that the page has scrolled to the bottom
             if (window.innerHeight + document.documentElement.scrollTop === document.documentElement.offsetHeight) {
-                loadUsers();
+                loadUsers(currentPage);
             }
         };
     }
 
-    loadUsers = () => {
+    loadUsers = (currentPage) => {
         this.setState({
             loading: true
         }, () => {
-            axios.get('https://www.techinasia.com/wp-json/techinasia/2.0/posts')
+            axios.get(`https://www.techinasia.com/wp-json/techinasia/2.0/posts?page=${currentPage+1}&per_page=10`)
                 .then((results) => {
                     const {data} = results;
                     if (data) {
                         const {total_pages, current_page, posts} = data;
                         this.setState({
-                            data: posts,
+                            data: [
+                                ...this.state.data,
+                                ...posts
+                            ],
                             totalPage: total_pages,
-                            currentPage: current_page
+                            currentPage: current_page,
+                            hasMore: current_page < total_pages
                         });
                     }
                 })
@@ -61,15 +67,17 @@ export default class HomePage extends Component {
     }
 
     componentWillMount() {
-        this.loadUsers();
+        this.loadUsers(this.state.currentPage);
     }
 
     render() {
         const {data, error, loading, hasMore} = this.state;
         return (
             <div>
-                <h1>Infinite Posts!</h1>
-                <p>Scroll down to load more!!</p>
+                <div className="jumbotron text-center">
+                    <h1>My Nano TIA Page</h1>
+                    <p>Please scroll to the infinity and beyond!</p>
+                </div>
                 {data.map(item => (<MainPageNewsContainer data={item}/>))}
                 <hr/>
                 {error && <div style={{color: '#900'}}>{error}</div>}
@@ -79,7 +87,3 @@ export default class HomePage extends Component {
         );
     }
 }
-
-const container = document.createElement("div");
-document.body.appendChild(container);
-render(<HomePage/>, container);
