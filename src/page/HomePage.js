@@ -43,10 +43,6 @@ class HomePage extends Component {
         const {data, error, loading, hasMore} = posts;
         return (
             <div>
-                <div className="jumbotron text-center">
-                  <Link to="/"><h1>My Nano TIA Page</h1></Link>
-                  <p>Please scroll to the infinity and beyond!</p>
-                </div>
                 {this.renderPosts()}
                 <hr/>
             </div>

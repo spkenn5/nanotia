@@ -16,19 +16,23 @@ class NewsPage extends Component {
             articleSlug: props.match.params.articleSlug
         };
 
-        // window.onscroll = () => {
-        //     const { data, error, loading, currentPage, totalPage } = this.props.post;               
-        //     console.log('DEBUG --> ', this.props.post);
-        //     if (error || loading) {
-        //         return;
-        //     }
+        window.onscroll = () => {
+            const { post, data, error, loading, currentPage, totalPage } = this.props;                           
+            if (error || loading) {
+                return;
+            }
             
-        //     if (window.innerHeight + document.documentElement.scrollTop >= document.documentElement.offsetHeight) {                                        
-        //         if(data){                  
-        //           // props.fetchRelated(data.id);  
-        //         }
-        //     }
-        // };
+            if (window.innerHeight + document.documentElement.scrollTop >= document.documentElement.offsetHeight) {                
+                if(post){                                     
+                    const article = _.map(post, item => {            
+                        return item;
+                    });
+                    if(article){
+                        props.fetchRelated(article[article.length-1].id);
+                    }                    
+                }
+            }
+        };
     }
 
     componentDidMount() {
@@ -39,40 +43,31 @@ class NewsPage extends Component {
     renderPosts() {
         const { post } = this.props;
         const { data, error, loading, hasMore } = post;            
-                
-        if(post[this.props.match.params.articleSlug]){
-          return (<NewsContainer data={post[this.props.match.params.articleSlug]} />);  
-        }
-        return null;
+        
+        return _.map(post, item => {            
+            return (<NewsContainer data={item} />);;
+        });
     }
 
     render() {
         const { post } = this.props;
         const {data, error, loading, hasMore} = post;
 
-        if(!post[this.props.match.params.articleSlug]){
+        if(!post){
             return <div>Loading...</div>;
         }
 
         return (
-            <div>
-                <div className="jumbotron text-center">
-                  <Link to="/"><h1>My Nano TIA Page</h1></Link>
-                  <p>Please scroll to the infinity and beyond!</p>
-                </div>
+            <div>                
                 {this.renderPosts()}             
-                <hr/>
-                {error && <div style={{color: '#900'}}>{error}</div>}
-                {loading && <div>Loading...</div>}
-                {!hasMore && <div>You did it! You reached the end!</div>}
+                <hr/>                
             </div>
         );
     }
 }
 
-function mapStateToProps({ posts }, ownProps) {  
-  console.log('DEBUG posts, ownProps', posts, ownProps);
-  return { post: posts };
+function mapStateToProps({ posts }, ownProps) {       
+    return { post: posts };
 }
 
 export default connect(mapStateToProps, { fetchPost, fetchRelated })(NewsPage);

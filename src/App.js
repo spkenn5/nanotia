@@ -17,6 +17,10 @@ class App extends Component {
       <Provider store={createStoreWithMiddleware(reducers)}>
         <Router>     
             <div>
+              <div className="jumbotron text-center">
+                <Link to="/"><h1>My Nano TIA Page</h1></Link>
+                <p>Please scroll to the infinity and beyond!</p>
+              </div>
               <Switch>   
                 <Route path="/article/:articleSlug" component={NewsPage} />
                 <Route path="/" component={HomePage} />        
