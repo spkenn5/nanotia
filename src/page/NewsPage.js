@@ -66,8 +66,12 @@ class NewsPage extends Component {
     }
 }
 
-function mapStateToProps({ posts }, ownProps) {       
-    return { post: posts };
+function mapStateToProps({ posts }, ownProps) {  
+    if(posts.data){
+        return { post: posts.data };
+    }else {
+        return { post: posts };    
+    }    
 }
 
 export default connect(mapStateToProps, { fetchPost, fetchRelated })(NewsPage);

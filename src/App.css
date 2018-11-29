@@ -43,6 +43,18 @@
   overflow-x: scroll;
 }
 
+.news-page-news-container-paywalled {
+  position: relative;
+  margin: 10px;
+  max-height: 60%;
+  display: inline-block;
+  text-overflow: ellipsis; 
+  white-space: nowrap;
+  overflow: hidden;
+  margin: 0;
+}
+
+
 .news-page-news-container-detail-author {  
   margin: 10px;
   font-size: 12px;
@@ -53,13 +65,29 @@
   margin: 10px;
 }
 
+.news-page-news-container-detail-paywalled {
+  height: 50%;
+  margin: 10px; 
+}
+
 .news-page-news-content {  
   width: 100%;
   height: 800px;
   position: relative;
   display: inline-block;
   overflow: scroll;
-  margin: 0;  
+  margin: 0;
+}
+
+.news-page-news-content-paywalled {
+  width: 100%;
+  height: 300px;
+  position: relative;
+  display: inline-block;
+  text-overflow: ellipsis; 
+  white-space: nowrap;
+  overflow: hidden;
+  margin: 0;
 }
 
 .size-full {

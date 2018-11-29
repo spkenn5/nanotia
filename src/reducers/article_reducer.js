@@ -16,43 +16,18 @@ export default function(state={}, action) {
         hasMore: current_page < total_pages,
         loading: false
       };
-      return {
-        data: [
-          ...prevData,
-          ...posts
-        ],
-        totalPage: total_pages,
-        currentPage: current_page,
-        hasMore: current_page < total_pages,
-        loading: false
-      };
     }
     case FETCH_POST: {
       const { posts, current_page, total_pages } = action.payload.data;
-      const prevData = state.data ? state.data : [];       
-      return { ...state, [action.payload.data.posts[0].slug]: action.payload.data.posts[0] };     
-      return {  
-        data: posts[0],
-        currentPage: current_page,
-        totalPage: total_pages,
-        hasMore: true,
-        loading: false,
-        error: false
-      };
+      const prevData = state.data ? state.data : [];
+      const nextData = _.mapKeys(action.payload.data.posts, 'slug');
+      return { ...nextData };
     }
     case FETCH_RELATED: {
       const { posts, current_page, total_pages } = action.payload.data;
       const prevData = state.data ? state.data : [];     
-      const nextData = _.mapKeys(action.payload.data.posts, 'slug');      
-      return { ...state, ...nextData };  
-      return {  
-        related: posts,
-        currentPage: current_page,
-        totalPage: total_pages,
-        hasMore: true,
-        loading: false,
-        error: false
-      };
+      const nextData = _.mapKeys(action.payload.data.posts, 'slug');
+      return { ...state, ...nextData };        
     }
     default:
       return state;
