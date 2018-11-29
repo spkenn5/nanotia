@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from "react";
 import { render } from "react-dom";
+import { Link } from 'react-router-dom';
 
 export default function NewsContainer(props){
     const { data } = props;    
@@ -25,7 +26,7 @@ export default function NewsContainer(props){
                     <span style={{fontSize: 12, marginLeft: 10}}>{`${data.read_time} min read`}</span>
                 </div>
                 <div className="news-page-news-container-detail">
-                    <h2><a href={`/article/${data.slug}`}>{data.title}</a></h2>
+                    <Link to={`/article/${data.slug}`}><h2>{data.title}</h2></Link>
                     <div className="news-page-news-content" dangerouslySetInnerHTML={{__html: data.content}} />
                 </div>
             </div>

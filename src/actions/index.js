@@ -9,7 +9,7 @@ const ROOT_URL = 'https://www.techinasia.com/wp-json/techinasia/2.0';
 export function fetchPosts(page, max) {
   const PARAM = `?page=${page}&per_page=${max}`;
   const request = axios.get(`${ROOT_URL}/posts${PARAM}`);
-
+  console.log('DEBUG called');
   return {
     type: FETCH_POSTS,
     payload: request
@@ -27,7 +27,7 @@ export function fetchRelated(id) {
 
 export function fetchPost(slug) {
   const request = axios.get(`${ROOT_URL}/posts/${slug}`);
-
+  
   return {
     type: FETCH_POST,
     payload: request

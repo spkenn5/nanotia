@@ -4,6 +4,7 @@ import MainPageNewsContainer from '../components/MainPageNewsContainer';
 import axios from 'axios';
 import { connect } from 'react-redux';
 import { fetchPosts } from '../actions';
+import { Link } from 'react-router-dom';
 
 class HomePage extends Component {
     constructor(props) {
@@ -43,20 +44,17 @@ class HomePage extends Component {
         return (
             <div>
                 <div className="jumbotron text-center">
-                    <h1 onClick={() => {console.log('DEBUG clicked')}}>My Nano TIA Page</h1>
-                    <p>Please scroll to the infinity and beyond!</p>
+                  <Link to="/"><h1>My Nano TIA Page</h1></Link>
+                  <p>Please scroll to the infinity and beyond!</p>
                 </div>
                 {this.renderPosts()}
                 <hr/>
-                {error && <div style={{color: '#900'}}>{error}</div>}
-                {loading && <div>Loading...</div>}
-                {!hasMore && <div>You did it! You reached the end!</div>}
             </div>
         );
     }
 }
 
-function mapStateToProps(state) {
+function mapStateToProps(state) {    
     return { posts: state.posts };
 }
 

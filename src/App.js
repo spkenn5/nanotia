@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
 import HomePage from './page/HomePage.js';
 import NewsPage from './page/NewsPage.js';
 import { Provider } from 'react-redux';
@@ -19,7 +19,7 @@ class App extends Component {
             <div>
               <Switch>   
                 <Route path="/article/:articleSlug" component={NewsPage} />
-                <Route exact path="/" component={HomePage} />        
+                <Route path="/" component={HomePage} />        
               </Switch>
             </div>
         </Router>      

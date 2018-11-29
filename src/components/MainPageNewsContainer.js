@@ -1,13 +1,13 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 export default function MainPageNewsContainer(props){
 	const { data } = props;
-	
 	return (
 		<Fragment key={data.id}>
             <div className="main-page-news-container">
                 <div className="main-page-news-container-img">
-					<a href={`/article/${data.slug}`}>
+					<Link to={`/article/${data.slug}`}>
 						<img
 							width="250"
 							height="170"
@@ -15,10 +15,10 @@ export default function MainPageNewsContainer(props){
 							data-src="https://cdn.techinasia.com/wp-content/uploads/2016/03/Inside-Netflixs-battle-to-win-the-world-photo-04.jpg"
 							style={{objectFit: 'cover', display: 'inline-block', backgroundColor: 'rgba(0, 0, 0, 0.067)'}}
 						/>
-					</a>
+					</Link>
 				</div>
                 <div className="main-page-news-container-detail">
-                    <h2><a href={`/article/${data.slug}`}>{data.title}</a></h2>
+                    <Link to={`/article/${data.slug}`}><h2>{data.title}</h2></Link>
                     <div>{data.excerpt}</div>
                     <div className="main-page-news-container-detail-author">
 						<a href={`${data.author.author_url}`} data-cy="author-link">
