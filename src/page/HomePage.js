@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import React, {Fragment, Component} from 'react';
-import MainPageNewsContainer from '../components/MainPageNewsContainer';
+import MainContainer from '../components/MainContainer';
 import axios from 'axios';
 import { connect } from 'react-redux';
 import { fetchPosts } from '../actions';
@@ -30,7 +30,7 @@ class HomePage extends Component {
 
     renderPosts() {
         return _.map(this.props.posts.data, post => {            
-            return (<MainPageNewsContainer data={post}/>)
+            return (<MainContainer data={post}/>)
         });
     }
 

@@ -2,7 +2,7 @@ import _ from 'lodash';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { fetchPost, fetchRelated } from '../actions';
+import { fetchPost, fetchRelated, fetchPrevious } from '../actions';
 import NewsContainer from '../components/NewsContainer';
 
 class NewsPage extends Component {
@@ -27,8 +27,9 @@ class NewsPage extends Component {
                     const article = _.map(post, item => {            
                         return item;
                     });
+                    
                     if(article){
-                        props.fetchRelated(article[article.length-1].id);
+                        props.fetchPrevious(article[article.length-1].id);
                     }                    
                 }
             }
@@ -66,7 +67,7 @@ class NewsPage extends Component {
     }
 }
 
-function mapStateToProps({ posts }, ownProps) {  
+function mapStateToProps({ posts }, ownProps) {
     if(posts.data){
         return { post: posts.data };
     }else {
@@ -74,4 +75,4 @@ function mapStateToProps({ posts }, ownProps) {
     }    
 }
 
-export default connect(mapStateToProps, { fetchPost, fetchRelated })(NewsPage);
+export default connect(mapStateToProps, { fetchPost, fetchRelated, fetchPrevious })(NewsPage);

@@ -3,6 +3,7 @@ import axios from 'axios';
 export const FETCH_POSTS = 'fetch_posts';
 export const FETCH_RELATED = 'fetch_related';
 export const FETCH_POST = 'fetch_post';
+export const FETCH_PREVIOUS = 'fetch_previous';
 
 const ROOT_URL = 'https://www.techinasia.com/wp-json/techinasia/2.0';
 
@@ -12,6 +13,15 @@ export function fetchPosts(page, max) {
   
   return {
     type: FETCH_POSTS,
+    payload: request
+  };
+}
+
+export function fetchPrevious(id){
+  const request = axios.get(`${ROOT_URL}/posts/${id}/previous`);
+
+  return {
+    type: FETCH_PREVIOUS,
     payload: request
   };
 }

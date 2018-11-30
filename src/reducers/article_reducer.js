@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import { FETCH_POST, FETCH_POSTS, FETCH_RELATED } from '../actions';
+import { FETCH_PREVIOUS, FETCH_POST, FETCH_POSTS, FETCH_RELATED } from '../actions';
 
 export default function(state={}, action) {
   switch(action.type){    
@@ -17,9 +17,11 @@ export default function(state={}, action) {
         loading: false
       };
     }
-    case FETCH_POST: {
-      const { posts, current_page, total_pages } = action.payload.data;
-      const prevData = state.data ? state.data : [];
+    case FETCH_PREVIOUS: {      
+      const nextData = _.mapKeys(action.payload.data.posts, 'slug');      
+      return { ...state, ...nextData };
+    }
+    case FETCH_POST: {        
       const nextData = _.mapKeys(action.payload.data.posts, 'slug');
       return { ...nextData };
     }
