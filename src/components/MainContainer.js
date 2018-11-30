@@ -1,42 +1,24 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-export default function MainPageNewsContainer(props){
+import AuthorAvatar from './AuthorAvatar';
+import ImageHolder from './ImageHolder';
+import AuthorHolder from './AuthorHolder';
+export default function MainContainer(props){
 	const { data } = props;
 	return (
 		<Fragment key={data.id}>
             <div className="main-page-news-container">
                 <div className="main-page-news-container-img">
 					<Link to={`/article/${data.slug}`}>
-						<img
-							width="250"
-							height="170"
-							src={data.featured_image.source}
-							data-src="https://cdn.techinasia.com/wp-content/uploads/2016/03/Inside-Netflixs-battle-to-win-the-world-photo-04.jpg"
-							style={{objectFit: 'cover', display: 'inline-block', backgroundColor: 'rgba(0, 0, 0, 0.067)'}}
-						/>
+						<ImageHolder url={data.featured_image.source}/>
 					</Link>
 				</div>
                 <div className="main-page-news-container-detail">
                     <Link to={`/article/${data.slug}`}><h2>{data.title}</h2></Link>
                     <div>{data.excerpt}</div>
                     <div className="main-page-news-container-detail-author">
-						<a href={`${data.author.author_url}`} data-cy="author-link">
-                        <img
-                            width="34"
-                            height="34"
-                            src={data.author.avatar_url}
-                            data-src={data.author.avatar_url}
-                            style={{
-                                objectFit: 'cover',
-                                display: 'inline-block',
-                                backgroundColor: 'rgba(0, 0, 0, 0.067)',
-                                borderRadius: 123123,
-								marginRight: 10
-                            }}
-                        />{data.author.display_name}
-                        </a>·
-						<span style={{fontSize: 12, marginLeft: 10}}>{`${data.read_time} min read`}</span>
+						<AuthorHolder data={data.author} readTime={data.read_time} />
 					</div>
                 </div>
             </div>
@@ -44,11 +26,11 @@ export default function MainPageNewsContainer(props){
    );
 }
 
-MainPageNewsContainer.propTypes = {
+MainContainer.propTypes = {
 	data: PropTypes.any
 }
 
-MainPageNewsContainer.defaultProps = {
+MainContainer.defaultProps = {
 	data: {
 		author: {}
 	}

@@ -54,6 +54,13 @@
   margin: 0;
 }
 
+.author-avatar-img {
+    object-fit: cover;
+    display: inline-block;
+    background-color: rgba(0, 0, 0, 0.067);
+    border-radius: 123123;
+    margin-right: 10;
+}
 
 .news-page-news-container-detail-author {  
   margin: 10px;
